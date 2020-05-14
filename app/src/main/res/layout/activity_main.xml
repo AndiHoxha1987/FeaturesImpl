@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/count_down_increment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello World!"
+        app:layout_constraintBottom_toBottomOf="@id/value"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="@id/count_down_decrement"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/count_down_decrement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello World!"
+        app:layout_constraintBottom_toBottomOf="@id/value"
+        app:layout_constraintLeft_toLeftOf="@id/count_down_increment"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/count_down_decrement" />
+
+    <com.google.android.gms.ads.AdView
+        xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        ads:layout_constraintBottom_toBottomOf="parent"
+        ads:layout_constraintRight_toRightOf="parent"
+        ads:layout_constraintLeft_toLeftOf="parent"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-3940256099942544/6300978111">
+    </com.google.android.gms.ads.AdView>
+</androidx.constraintlayout.widget.ConstraintLayout>

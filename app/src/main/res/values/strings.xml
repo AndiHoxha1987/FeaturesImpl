@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">CountDownTimerAndAdsImpl</string>
+    <string name="count_down_timer_string">%1$s</string>
+    <string name="action_share">Share</string>
+</resources>
