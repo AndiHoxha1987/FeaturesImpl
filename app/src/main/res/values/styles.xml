@@ -6,6 +6,27 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <!-- Customize menu item background and textColor. -->
+        <item name="popupTheme">@style/popupTheme</item>
+    </style>
+
+    <!-- Customize menu item background and textColor. -->
+    <style name="popupTheme" parent="Theme.AppCompat.Light">
+        <item name="android:background">@android:color/darker_gray</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="myToast">
+        <item name="stTextBold">true</item>
+        <item name="stTextColor">#fff</item>
+        <item name="stTextSize">14sp</item>
+        <item name="stColorBackground">@android:color/holo_blue_dark</item>
+        <item name="stSolidBackground">true</item>
+        <item name="stStrokeWidth">3dp</item>
+        <item name="stStrokeColor">#fff</item>
+        <item name="stLength">LONG</item> LONG or SHORT
+        <item name="stGravity">center</item> top or center
+        <item name="stRadius">5dp</item>
     </style>
 
 </resources>

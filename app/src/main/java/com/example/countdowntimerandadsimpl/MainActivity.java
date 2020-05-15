@@ -5,9 +5,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -18,19 +25,21 @@ import com.google.android.gms.ads.rewarded.RewardItem;
 import com.google.android.gms.ads.rewarded.RewardedAd;
 import com.google.android.gms.ads.rewarded.RewardedAdCallback;
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
+import com.muddzdev.styleabletoast.StyleableToast;
 
 public class MainActivity extends AppCompatActivity {
 
     private CountDownTimer countDownIncrement;
     private CountDownTimer countDownDecrement;
-    private int lives = 2;
+    private int lives = 15;
     private TextView value;
     private TextView increment;
     private TextView decrement;
+    private float dX, dY;
     private RewardedAd rewardedAd;
     private boolean userEarnedReward = false;
-    private long incrementMillis = 4000;
-    private long decrementMillis = 3000;
+    private final long incrementMillis = 4000;
+    private final long decrementMillis = 3000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,18 +50,43 @@ public class MainActivity extends AppCompatActivity {
         value = findViewById(R.id.value);
         increment = findViewById(R.id.count_down_increment);
         decrement = findViewById(R.id.count_down_decrement);
+        Button touchListenerButton = findViewById(R.id.touch_listener_button);
         value.setText(String.valueOf(lives));
 
-        startIncrement(incrementMillis);
-        startDecrement(decrementMillis);
+        touchListenerButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
+
+                    dX = v.getX() - event.getRawX();
+                    dY = v.getY() - event.getRawY();
+                }
+
+                if (event.getActionMasked() == MotionEvent.ACTION_MOVE) {
+                    v.animate()
+                            .x(event.getRawX() + dX)
+                            .y(event.getRawY() + dY)
+                            .setDuration(0)
+                            .start();
+                }
+                if (event.getActionMasked() == MotionEvent.ACTION_UP) {
+                }
+
+                return false;
+            }
+        });
+
+
+        startIncrement();
+        startDecrement();
     }
 
-    private void startIncrement(long l) {
+    private void startIncrement() {
         if (countDownIncrement != null) {
             countDownIncrement.cancel();
             countDownIncrement = null;
         }
-        countDownIncrement = new CountDownTimer(l, 100) {
+        countDownIncrement = new CountDownTimer(incrementMillis, 100) {
 
             public void onTick(long millisUntilFinished) {
                 String milliseconds = Long.toString(millisUntilFinished / 100);
@@ -64,19 +98,19 @@ public class MainActivity extends AppCompatActivity {
                 value.setText(String.valueOf(lives));
                 countDownIncrement = null;
                 if (lives > 0) {
-                    startIncrement(incrementMillis);
+                    startIncrement();
                 }
             }
 
         }.start();
     }
 
-    private void startDecrement(long l) {
+    private void startDecrement() {
         if (countDownDecrement != null) {
             countDownDecrement.cancel();
             countDownDecrement = null;
         }
-        countDownDecrement = new CountDownTimer(l, 100) {
+        countDownDecrement = new CountDownTimer(decrementMillis, 100) {
 
             public void onTick(long millisUntilFinished) {
                 String milliseconds = Long.toString(millisUntilFinished / 100);
@@ -87,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
                 if (lives > 0) {
                     lives--;
                     value.setText(String.valueOf(lives));
-                    startDecrement(decrementMillis);
+                    startDecrement();
                 } else {
                     countDownDecrement = null;
                     countDownIncrement.cancel();
@@ -175,8 +209,8 @@ public class MainActivity extends AppCompatActivity {
                                     value.setText(String.valueOf(lives));
                                     rewardedAd = createAndLoadRewardedAd();
                                     userEarnedReward = false;
-                                    startIncrement(incrementMillis);
-                                    startDecrement(decrementMillis);
+                                    startIncrement();
+                                    startDecrement();
                                 }
                             }
 
@@ -197,6 +231,32 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         builder.show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        super.onOptionsItemSelected(item);
+        if (item.getItemId() == R.id.test1) {
+            StyleableToast.makeText(this, "Styleable Toast", Toast.LENGTH_LONG, R.style.myToast).show();
+            return true;
+        }
+        if (item.getItemId() == R.id.test2) {
+            new StyleableToast
+                    .Builder(this)
+                    .text("Styleable Toast")
+                    .textColor(Color.WHITE)
+                    .backgroundColor(Color.BLUE)
+                    .show();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

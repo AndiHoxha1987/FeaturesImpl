@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">CountDownTimerAndAdsImpl</string>
     <string name="count_down_timer_string">%1$s</string>
-    <string name="action_share">Share</string>
+    <string name="test_toast_1">Test Toast 1</string>
+    <string name="test_toast_2">Test Toast 2</string>
+    <string name="touch_listener_button">Touch Listener Button</string>
 </resources>
